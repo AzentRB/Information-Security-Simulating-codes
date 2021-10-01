@@ -1,3 +1,12 @@
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma")
+#pragma GCC optimize("unroll-loops")
+#include <bits/stdc++.h> 
+#include <complex>
+#include <queue>
+#include <set>
+#include <unordered_set>
+#include <list>
 #include <chrono>
 #include <random>
 #include <iostream>
@@ -64,6 +73,10 @@ void solve(){
     ll p,q,e;
 	cout << "Enter p, q (must be primes): ";
 	cin >> p >> q;
+	while (!isPrime(p) || !isPrime(q)) {
+		cout << "p or q is not prime. Try again: ";
+		cin >> p >> q;
+	}
 	cout << "Enter public exponent (must be prime): ";
 	cin >> e;
 	while (!isPrime(e)) {
@@ -78,6 +91,11 @@ void solve(){
 	ll enc=lol(R,e,n),dec=lol(enc,d,n);
 	cout << endl;
 	cout << "e = " << e << endl;
+	cout << "n = p * q = " << n << endl;
+	cout << "phi = (p - 1) * (q - 1) = " << phi << endl;
+	cout << "d = " << d << endl;
+	cout << "Encrypted: " << enc << endl;
+	cout << "Decrypted: " << dec << endl;
 }
 int main()
 {

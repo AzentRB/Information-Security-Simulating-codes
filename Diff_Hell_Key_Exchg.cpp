@@ -1,3 +1,15 @@
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma")
+#pragma GCC optimize("unroll-loops")
+#include <bits/stdc++.h> 
+#include <complex>
+#include <queue>
+#include <set>
+#include <unordered_set>
+#include <list>
+#include <chrono>
+#include <random>
+#include <iostream>
 #include <algorithm>
 #include <cmath>
 #include <string>
@@ -45,6 +57,8 @@ ll lol(ll a,ll b,ll c){
 void solve(){
     ll A,B,a,b;
     cin >> A >> B >> a >> b;
+    ll ka=lol(lol(B,b,A),a,A),kb=lol(lol(B,a,A),b,A);
+    cout << "Key for Person 1 is: " << ka << endl << "Key for Person 2 is: " << kb;
 }
 int main()
 {

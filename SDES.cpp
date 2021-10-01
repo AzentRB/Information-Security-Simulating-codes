@@ -1,3 +1,14 @@
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma")
+#pragma GCC optimize("unroll-loops")
+#include <bits/stdc++.h> 
+#include <complex>
+#include <queue>
+#include <set>
+#include <unordered_set>
+#include <list>
+#include <chrono>
+#include <random>
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -129,12 +140,17 @@ string randomString(int length){
 void solve(){
     string plaintext=randomString(12);
 	string key=randomString(9),ciphertext,decryption;
+	int numrounds=4,rounds;
 	cout << "Original Plaintext: " << plaintext << endl << "Key: " << key << endl << "Encryption: " << endl;
 	for(int i=0; i < numrounds; i++){
 		plaintext=enc(key,plaintext,i+1);
 		cout << "C (after round " << i+1 << "): " << plaintext << endl;
 		rounds=i+1;
 	}
+	ciphertext.append(plaintext,6,6),ciphertext.append(plaintext,0,6);
+	cout << endl << "Ciphertext after " << rounds  << " rounds: " << ciphertext << endl << endl;
+	cout << "Proof by decryption:\n" << "Ciphertext: " << ciphertext << endl << endl;
+	decryption.append(ciphertext,6,6),decryption.append(ciphertext,0,6);
 	for(int j=numrounds; j > 0; j--) {
 		decryption=dec(key,decryption,j);
 		if(j != 1) cout << "C(after round " << j << "): " << decryption << endl;

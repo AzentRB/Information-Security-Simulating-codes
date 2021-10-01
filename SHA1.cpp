@@ -1,3 +1,15 @@
+#pragma GCC optimize("Ofast")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma")
+#pragma GCC optimize("unroll-loops")
+#include <bits/stdc++.h> 
+#include <complex>
+#include <queue>
+#include <set>
+#include <unordered_set>
+#include <list>
+#include <chrono>
+#include <random>
+#include <iostream>
 #include <algorithm>
 #include <cmath>
 #include <string>
@@ -43,18 +55,21 @@ int W[80],A,B,C,D,E,A1,B1,C1,D1,E1,lol;
 void printX() { 
     for(int i=0;i<X.size();i++) {
         printf("%02x",X[i]);
+        if((i+1)%4==0) printf(" ");
         if((i+1)%16==0) printf("\n");
     }
 }
 int S(unsigned int x, int n) { return x>>(32-n)|(x << n);}
 void append(string m) {  
     lol=(m.size()+8)/64+1;X.resize(lol*64);
+    int i=0;for(;i<m.size();i++) X[i]=m[i];
     X[i++]=0x80;while(i<X.size()-8) X[i]=0,i++;
     long long int a=m.size() * 8;
     for (i=X.size() - 1;i >= X.size() - 8;i--) X[i] =a%256,a/=256;
 }
 void setW(vector<int> m, int n) { 
     n *= 64;
+    for(int i=0;i<16;i++) W[i]=(m[n+4*i]<<24)+(m[n+4*i+1]<<16)+(m[n+4*i+2]<<8)+m[n+4*i+3];
     for(int i=16;i<80;i++) W[i]=S(W[i-16]^W[i-14]^W[i-8]^W[i-3],1);
 }
 int ft(int t) {
@@ -75,6 +90,7 @@ void sha1(string text) {
     int temp;
     for(int i=0;i<lol;i++) {
         setW(X,i);
+        for(int t=0;t<80;t++) temp=E+ft(t)+S(A,5)+W[t]+Kt(t),E=D,D=C,C=S(B,30),B=A,A=temp;
         A1=A=A+A1,B1=B=B+B1,C1=C=C+C1,D1=D=D+D1,E1=E=E+E1;
     }
     printf("%08x%08x%08x%08x%08x\n\n", A1, B1, C1, D1, E1);
